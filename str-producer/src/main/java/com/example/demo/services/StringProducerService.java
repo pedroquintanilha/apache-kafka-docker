@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,20 +19,9 @@ public class StringProducerService {
 	
 	private static final Logger log = LogManager.getLogger(StringProducerService.class);
 	
-	
 	public void sendMessage(String message) {
-		kafkaTemplate.send("str-topic", message).addCallback(
-				success -> {
-					if(success != null) {
-						log.info("Send message with success {}", message);
-						log.info("Partition {}, Offset {}",
-								success.getRecordMetadata().partition(),
-								success.getRecordMetadata().offset());
-					}
-				}, 
-				error -> log.error("Error send message")
-				);
-			
+		log.info("Send message {}", message);
+		kafkaTemplate.send("str-topic", message);
 	}
 		
 
